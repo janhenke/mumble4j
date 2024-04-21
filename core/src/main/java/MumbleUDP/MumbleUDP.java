@@ -154,7 +154,7 @@ public final class MumbleUDP {
      */
     boolean getIsTerminator();
 
-    public MumbleUDP.MumbleUDP.Audio.HeaderCase getHeaderCase();
+    public MumbleUDP.Audio.HeaderCase getHeaderCase();
   }
   /**
    * Protobuf type {@code MumbleUDP.Audio}
@@ -286,15 +286,15 @@ public final class MumbleUDP {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return MumbleUDP.MumbleUDP.internal_static_MumbleUDP_Audio_descriptor;
+      return MumbleUDP.internal_static_MumbleUDP_Audio_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return MumbleUDP.MumbleUDP.internal_static_MumbleUDP_Audio_fieldAccessorTable
+      return MumbleUDP.internal_static_MumbleUDP_Audio_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              MumbleUDP.MumbleUDP.Audio.class, MumbleUDP.MumbleUDP.Audio.Builder.class);
+              MumbleUDP.Audio.class, MumbleUDP.Audio.Builder.class);
     }
 
     private int headerCase_ = 0;
@@ -635,10 +635,10 @@ public final class MumbleUDP {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof MumbleUDP.MumbleUDP.Audio)) {
+      if (!(obj instanceof MumbleUDP.Audio)) {
         return super.equals(obj);
       }
-      MumbleUDP.MumbleUDP.Audio other = (MumbleUDP.MumbleUDP.Audio) obj;
+      MumbleUDP.Audio other = (MumbleUDP.Audio) obj;
 
       if (getSenderSession()
           != other.getSenderSession()) return false;
@@ -711,69 +711,69 @@ public final class MumbleUDP {
       return hash;
     }
 
-    public static MumbleUDP.MumbleUDP.Audio parseFrom(
+    public static MumbleUDP.Audio parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static MumbleUDP.MumbleUDP.Audio parseFrom(
+    public static MumbleUDP.Audio parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static MumbleUDP.MumbleUDP.Audio parseFrom(
+    public static MumbleUDP.Audio parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static MumbleUDP.MumbleUDP.Audio parseFrom(
+    public static MumbleUDP.Audio parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static MumbleUDP.MumbleUDP.Audio parseFrom(byte[] data)
+    public static MumbleUDP.Audio parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static MumbleUDP.MumbleUDP.Audio parseFrom(
+    public static MumbleUDP.Audio parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static MumbleUDP.MumbleUDP.Audio parseFrom(java.io.InputStream input)
+    public static MumbleUDP.Audio parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static MumbleUDP.MumbleUDP.Audio parseFrom(
+    public static MumbleUDP.Audio parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static MumbleUDP.MumbleUDP.Audio parseDelimitedFrom(java.io.InputStream input)
+    public static MumbleUDP.Audio parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static MumbleUDP.MumbleUDP.Audio parseDelimitedFrom(
+    public static MumbleUDP.Audio parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static MumbleUDP.MumbleUDP.Audio parseFrom(
+    public static MumbleUDP.Audio parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static MumbleUDP.MumbleUDP.Audio parseFrom(
+    public static MumbleUDP.Audio parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -786,7 +786,7 @@ public final class MumbleUDP {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(MumbleUDP.MumbleUDP.Audio prototype) {
+    public static Builder newBuilder(MumbleUDP.Audio prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -807,21 +807,21 @@ public final class MumbleUDP {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:MumbleUDP.Audio)
-        MumbleUDP.MumbleUDP.AudioOrBuilder {
+        MumbleUDP.AudioOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return MumbleUDP.MumbleUDP.internal_static_MumbleUDP_Audio_descriptor;
+        return MumbleUDP.internal_static_MumbleUDP_Audio_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return MumbleUDP.MumbleUDP.internal_static_MumbleUDP_Audio_fieldAccessorTable
+        return MumbleUDP.internal_static_MumbleUDP_Audio_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                MumbleUDP.MumbleUDP.Audio.class, MumbleUDP.MumbleUDP.Audio.Builder.class);
+                MumbleUDP.Audio.class, MumbleUDP.Audio.Builder.class);
       }
 
-      // Construct using MumbleUDP.MumbleUDP.Audio.newBuilder()
+      // Construct using MumbleUDP.Audio.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -859,17 +859,17 @@ public final class MumbleUDP {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return MumbleUDP.MumbleUDP.internal_static_MumbleUDP_Audio_descriptor;
+        return MumbleUDP.internal_static_MumbleUDP_Audio_descriptor;
       }
 
       @java.lang.Override
-      public MumbleUDP.MumbleUDP.Audio getDefaultInstanceForType() {
-        return MumbleUDP.MumbleUDP.Audio.getDefaultInstance();
+      public MumbleUDP.Audio getDefaultInstanceForType() {
+        return MumbleUDP.Audio.getDefaultInstance();
       }
 
       @java.lang.Override
-      public MumbleUDP.MumbleUDP.Audio build() {
-        MumbleUDP.MumbleUDP.Audio result = buildPartial();
+      public MumbleUDP.Audio build() {
+        MumbleUDP.Audio result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -877,8 +877,8 @@ public final class MumbleUDP {
       }
 
       @java.lang.Override
-      public MumbleUDP.MumbleUDP.Audio buildPartial() {
-        MumbleUDP.MumbleUDP.Audio result = new MumbleUDP.MumbleUDP.Audio(this);
+      public MumbleUDP.Audio buildPartial() {
+        MumbleUDP.Audio result = new MumbleUDP.Audio(this);
         int from_bitField0_ = bitField0_;
         if (headerCase_ == 1) {
           result.header_ = header_;
@@ -935,16 +935,16 @@ public final class MumbleUDP {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof MumbleUDP.MumbleUDP.Audio) {
-          return mergeFrom((MumbleUDP.MumbleUDP.Audio)other);
+        if (other instanceof MumbleUDP.Audio) {
+          return mergeFrom((MumbleUDP.Audio)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(MumbleUDP.MumbleUDP.Audio other) {
-        if (other == MumbleUDP.MumbleUDP.Audio.getDefaultInstance()) return this;
+      public Builder mergeFrom(MumbleUDP.Audio other) {
+        if (other == MumbleUDP.Audio.getDefaultInstance()) return this;
         if (other.getSenderSession() != 0) {
           setSenderSession(other.getSenderSession());
         }
@@ -998,11 +998,11 @@ public final class MumbleUDP {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        MumbleUDP.MumbleUDP.Audio parsedMessage = null;
+        MumbleUDP.Audio parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (MumbleUDP.MumbleUDP.Audio) e.getUnfinishedMessage();
+          parsedMessage = (MumbleUDP.Audio) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1524,12 +1524,12 @@ public final class MumbleUDP {
     }
 
     // @@protoc_insertion_point(class_scope:MumbleUDP.Audio)
-    private static final MumbleUDP.MumbleUDP.Audio DEFAULT_INSTANCE;
+    private static final MumbleUDP.Audio DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new MumbleUDP.MumbleUDP.Audio();
+      DEFAULT_INSTANCE = new MumbleUDP.Audio();
     }
 
-    public static MumbleUDP.MumbleUDP.Audio getDefaultInstance() {
+    public static MumbleUDP.Audio getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1554,7 +1554,7 @@ public final class MumbleUDP {
     }
 
     @java.lang.Override
-    public MumbleUDP.MumbleUDP.Audio getDefaultInstanceForType() {
+    public MumbleUDP.Audio getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1732,15 +1732,15 @@ public final class MumbleUDP {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return MumbleUDP.MumbleUDP.internal_static_MumbleUDP_Ping_descriptor;
+      return MumbleUDP.internal_static_MumbleUDP_Ping_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return MumbleUDP.MumbleUDP.internal_static_MumbleUDP_Ping_fieldAccessorTable
+      return MumbleUDP.internal_static_MumbleUDP_Ping_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              MumbleUDP.MumbleUDP.Ping.class, MumbleUDP.MumbleUDP.Ping.Builder.class);
+              MumbleUDP.Ping.class, MumbleUDP.Ping.Builder.class);
     }
 
     public static final int TIMESTAMP_FIELD_NUMBER = 1;
@@ -1912,10 +1912,10 @@ public final class MumbleUDP {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof MumbleUDP.MumbleUDP.Ping)) {
+      if (!(obj instanceof MumbleUDP.Ping)) {
         return super.equals(obj);
       }
-      MumbleUDP.MumbleUDP.Ping other = (MumbleUDP.MumbleUDP.Ping) obj;
+      MumbleUDP.Ping other = (MumbleUDP.Ping) obj;
 
       if (getTimestamp()
           != other.getTimestamp()) return false;
@@ -1960,69 +1960,69 @@ public final class MumbleUDP {
       return hash;
     }
 
-    public static MumbleUDP.MumbleUDP.Ping parseFrom(
+    public static MumbleUDP.Ping parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static MumbleUDP.MumbleUDP.Ping parseFrom(
+    public static MumbleUDP.Ping parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static MumbleUDP.MumbleUDP.Ping parseFrom(
+    public static MumbleUDP.Ping parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static MumbleUDP.MumbleUDP.Ping parseFrom(
+    public static MumbleUDP.Ping parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static MumbleUDP.MumbleUDP.Ping parseFrom(byte[] data)
+    public static MumbleUDP.Ping parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static MumbleUDP.MumbleUDP.Ping parseFrom(
+    public static MumbleUDP.Ping parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static MumbleUDP.MumbleUDP.Ping parseFrom(java.io.InputStream input)
+    public static MumbleUDP.Ping parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static MumbleUDP.MumbleUDP.Ping parseFrom(
+    public static MumbleUDP.Ping parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static MumbleUDP.MumbleUDP.Ping parseDelimitedFrom(java.io.InputStream input)
+    public static MumbleUDP.Ping parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static MumbleUDP.MumbleUDP.Ping parseDelimitedFrom(
+    public static MumbleUDP.Ping parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static MumbleUDP.MumbleUDP.Ping parseFrom(
+    public static MumbleUDP.Ping parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static MumbleUDP.MumbleUDP.Ping parseFrom(
+    public static MumbleUDP.Ping parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -2035,7 +2035,7 @@ public final class MumbleUDP {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(MumbleUDP.MumbleUDP.Ping prototype) {
+    public static Builder newBuilder(MumbleUDP.Ping prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -2062,21 +2062,21 @@ public final class MumbleUDP {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:MumbleUDP.Ping)
-        MumbleUDP.MumbleUDP.PingOrBuilder {
+        MumbleUDP.PingOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return MumbleUDP.MumbleUDP.internal_static_MumbleUDP_Ping_descriptor;
+        return MumbleUDP.internal_static_MumbleUDP_Ping_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return MumbleUDP.MumbleUDP.internal_static_MumbleUDP_Ping_fieldAccessorTable
+        return MumbleUDP.internal_static_MumbleUDP_Ping_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                MumbleUDP.MumbleUDP.Ping.class, MumbleUDP.MumbleUDP.Ping.Builder.class);
+                MumbleUDP.Ping.class, MumbleUDP.Ping.Builder.class);
       }
 
-      // Construct using MumbleUDP.MumbleUDP.Ping.newBuilder()
+      // Construct using MumbleUDP.Ping.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2112,17 +2112,17 @@ public final class MumbleUDP {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return MumbleUDP.MumbleUDP.internal_static_MumbleUDP_Ping_descriptor;
+        return MumbleUDP.internal_static_MumbleUDP_Ping_descriptor;
       }
 
       @java.lang.Override
-      public MumbleUDP.MumbleUDP.Ping getDefaultInstanceForType() {
-        return MumbleUDP.MumbleUDP.Ping.getDefaultInstance();
+      public MumbleUDP.Ping getDefaultInstanceForType() {
+        return MumbleUDP.Ping.getDefaultInstance();
       }
 
       @java.lang.Override
-      public MumbleUDP.MumbleUDP.Ping build() {
-        MumbleUDP.MumbleUDP.Ping result = buildPartial();
+      public MumbleUDP.Ping build() {
+        MumbleUDP.Ping result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -2130,8 +2130,8 @@ public final class MumbleUDP {
       }
 
       @java.lang.Override
-      public MumbleUDP.MumbleUDP.Ping buildPartial() {
-        MumbleUDP.MumbleUDP.Ping result = new MumbleUDP.MumbleUDP.Ping(this);
+      public MumbleUDP.Ping buildPartial() {
+        MumbleUDP.Ping result = new MumbleUDP.Ping(this);
         result.timestamp_ = timestamp_;
         result.requestExtendedInformation_ = requestExtendedInformation_;
         result.serverVersionV2_ = serverVersionV2_;
@@ -2176,16 +2176,16 @@ public final class MumbleUDP {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof MumbleUDP.MumbleUDP.Ping) {
-          return mergeFrom((MumbleUDP.MumbleUDP.Ping)other);
+        if (other instanceof MumbleUDP.Ping) {
+          return mergeFrom((MumbleUDP.Ping)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(MumbleUDP.MumbleUDP.Ping other) {
-        if (other == MumbleUDP.MumbleUDP.Ping.getDefaultInstance()) return this;
+      public Builder mergeFrom(MumbleUDP.Ping other) {
+        if (other == MumbleUDP.Ping.getDefaultInstance()) return this;
         if (other.getTimestamp() != 0L) {
           setTimestamp(other.getTimestamp());
         }
@@ -2219,11 +2219,11 @@ public final class MumbleUDP {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        MumbleUDP.MumbleUDP.Ping parsedMessage = null;
+        MumbleUDP.Ping parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (MumbleUDP.MumbleUDP.Ping) e.getUnfinishedMessage();
+          parsedMessage = (MumbleUDP.Ping) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -2519,12 +2519,12 @@ public final class MumbleUDP {
     }
 
     // @@protoc_insertion_point(class_scope:MumbleUDP.Ping)
-    private static final MumbleUDP.MumbleUDP.Ping DEFAULT_INSTANCE;
+    private static final MumbleUDP.Ping DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new MumbleUDP.MumbleUDP.Ping();
+      DEFAULT_INSTANCE = new MumbleUDP.Ping();
     }
 
-    public static MumbleUDP.MumbleUDP.Ping getDefaultInstance() {
+    public static MumbleUDP.Ping getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -2549,7 +2549,7 @@ public final class MumbleUDP {
     }
 
     @java.lang.Override
-    public MumbleUDP.MumbleUDP.Ping getDefaultInstanceForType() {
+    public MumbleUDP.Ping getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 

@@ -15,7 +15,7 @@
     <licenses>
         <license>
             <name>MIT License</name>
-            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <url>https://www.opensource.org/licenses/mit-license.php</url>
         </license>
     </licenses>
 
@@ -31,11 +31,13 @@
     <scm>
         <connection>scm:git:git://github.com/janhenke/mumble4j.git</connection>
         <developerConnection>scm:git:ssh://github.com:janhenke/mumble4j.git</developerConnection>
-        <url>http://github.com/janhenke/mumble4j/tree/master</url>
+        <url>https://github.com/janhenke/mumble4j/tree/master</url>
     </scm>
 
     <modules>
         <module>core</module>
+        <module>client</module>
+        <module>server</module>
     </modules>
 
     <properties>
@@ -43,5 +45,21 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>de.taujhe</groupId>
+                <artifactId>mumble4j-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jetbrains</groupId>
+                <artifactId>annotations</artifactId>
+                <version>24.1.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
