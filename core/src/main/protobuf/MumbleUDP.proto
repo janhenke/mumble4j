@@ -5,7 +5,7 @@
 
 syntax = "proto3";
 
-package MumbleUDP;
+package MumbleUDPProto;
 
 option optimize_for = SPEED;
 

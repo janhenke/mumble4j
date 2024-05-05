@@ -3,7 +3,7 @@
  */
 module de.taujhe.mumble4j.core {
 	requires org.jetbrains.annotations;
-	requires protobuf.java;
+	requires com.google.protobuf;
 
 	exports de.taujhe.mumble4j.core;
 }
