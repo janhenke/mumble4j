@@ -1,4 +1,4 @@
-package de.taujhe.mumble4j.core;
+package de.taujhe.mumble4j.packet;
 
 import java.util.Arrays;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package de.taujhe.mumble4j.core;
+package de.taujhe.mumble4j.packet;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -15,7 +15,7 @@ import MumbleProto.Mumble;
  *
  * @author Jan Henke (Jan.Henke@taujhe.de)
  */
-public abstract class AbstractPacket
+public sealed abstract class MumbleControlPacket permits VersionPacket
 {
 	/**
 	 * Length of the packet header preceding every packet. It consists of
@@ -41,7 +41,8 @@ public abstract class AbstractPacket
 	abstract protected MessageLite getMessage();
 
 	@NotNull
-	public static AbstractPacket parseNetworkBuffer(@NotNull ByteBuffer buffer)
+	public static MumbleControlPacket parseNetworkBuffer(final @NotNull ByteBuffer buffer)
+			throws InvalidProtocolBufferException
 	{
 		// The protocol is defined in big endian byte order
 		buffer.order(ByteOrder.BIG_ENDIAN);
@@ -51,22 +52,15 @@ public abstract class AbstractPacket
 		// The buffer contains the encoded message's length, but we do not need it, still we have to skip these bytes.
 		buffer.getInt();
 
-		try
+		return switch (packetType)
 		{
-			return switch (packetType)
-			{
-				case VERSION -> new VersionPacket(Mumble.Version.parseFrom(buffer));
-				// TODO: Handle remaining types
-				default -> throw new IllegalStateException("Unexpected value: " + packetType);
-			};
-		}
-		catch (final InvalidProtocolBufferException e)
-		{
-			throw new RuntimeException(e);
-		}
+			case VERSION -> new VersionPacket(Mumble.Version.parseFrom(buffer));
+			// TODO: Handle remaining types
+			default -> throw new IllegalStateException("Unexpected value: " + packetType);
+		};
 	}
 
-	public void serializePacket(@NotNull final ByteBuffer buffer)
+	public void serialize(@NotNull final ByteBuffer buffer)
 	{
 		final PacketType packetType = getPacketType();
 		final MessageLite message = getMessage();
