@@ -1,0 +1,6 @@
+quarkus:
+  http:
+    access-log:
+      enabled: true
+  jib:
+    ports: ${quarkus.http.port:8080}, 64738

@@ -37,6 +37,7 @@
     <modules>
         <module>core</module>
         <module>client</module>
+        <module>server</module>
     </modules>
 
     <properties>

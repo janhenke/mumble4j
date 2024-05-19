@@ -4,7 +4,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SocketChannel;
-import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import javax.net.ssl.SSLContext;
 
@@ -31,11 +30,9 @@ public final class MumbleClient implements Closeable
 	{
 		try
 		{
-			final SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
-			sslContext.init(null, null, null);
-			return connect(address, sslContext);
+			return connect(address, SSLContext.getDefault());
 		}
-		catch (NoSuchAlgorithmException | KeyManagementException e)
+		catch (NoSuchAlgorithmException e)
 		{
 			throw new IllegalStateException("Not suitable TLS implementation is available.", e);
 		}
