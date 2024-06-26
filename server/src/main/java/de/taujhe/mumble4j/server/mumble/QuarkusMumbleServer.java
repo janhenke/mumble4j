@@ -3,7 +3,6 @@ package de.taujhe.mumble4j.server.mumble;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import javax.net.ssl.SSLContext;
 
 import de.taujhe.mumble4j.server.MumbleServer;
 
@@ -13,7 +12,10 @@ import org.slf4j.LoggerFactory;
 
 import io.quarkus.runtime.Shutdown;
 import io.quarkus.runtime.Startup;
+import io.quarkus.tls.TlsConfiguration;
+import io.quarkus.tls.TlsConfigurationRegistry;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 /**
  * A bean to wrap a {@link MumbleServer} instance into the Quarkus app lifecycle.
@@ -28,16 +30,26 @@ public class QuarkusMumbleServer implements Closeable
 
 	private final MumbleServer mumbleServer;
 
-	public QuarkusMumbleServer(final @NotNull SSLContext sslContext)
+	@Inject
+	public QuarkusMumbleServer(final @NotNull TlsConfigurationRegistry tlsConfigurationRegistry)
 	{
+		final TlsConfiguration tlsConfiguration = tlsConfigurationRegistry.get("mumble")
+		                                                                  .orElseThrow(() -> new RuntimeException(
+				                                                                  "Named TLS configuration 'mumble' is required."));
+
 		try
 		{
-			this.mumbleServer = MumbleServer.open(sslContext);
+			this.mumbleServer = MumbleServer.open(tlsConfiguration.createSSLContext());
 		}
 		catch (final IOException e)
 		{
 			LOGGER.error("Failed to open MumbleServer", e);
 			throw new UncheckedIOException(e);
+		}
+		catch (Exception e)
+		{
+			LOGGER.error("Failed to create SSLContext", e);
+			throw new RuntimeException(e);
 		}
 	}
 
