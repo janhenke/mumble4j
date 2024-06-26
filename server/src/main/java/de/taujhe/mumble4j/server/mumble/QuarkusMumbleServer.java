@@ -3,9 +3,11 @@ package de.taujhe.mumble4j.server.mumble;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.net.InetSocketAddress;
 
 import de.taujhe.mumble4j.server.MumbleServer;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +33,8 @@ public class QuarkusMumbleServer implements Closeable
 	private final MumbleServer mumbleServer;
 
 	@Inject
-	public QuarkusMumbleServer(final @NotNull TlsConfigurationRegistry tlsConfigurationRegistry)
+	public QuarkusMumbleServer(final @NotNull TlsConfigurationRegistry tlsConfigurationRegistry,
+	                           @ConfigProperty(name = "mumble.server.port") final int serverPort)
 	{
 		final TlsConfiguration tlsConfiguration = tlsConfigurationRegistry.get("mumble")
 		                                                                  .orElseThrow(() -> new RuntimeException(
@@ -39,7 +42,8 @@ public class QuarkusMumbleServer implements Closeable
 
 		try
 		{
-			this.mumbleServer = MumbleServer.open(tlsConfiguration.createSSLContext());
+			this.mumbleServer = MumbleServer.open(tlsConfiguration.createSSLContext(),
+			                                      new InetSocketAddress(serverPort));
 		}
 		catch (final IOException e)
 		{

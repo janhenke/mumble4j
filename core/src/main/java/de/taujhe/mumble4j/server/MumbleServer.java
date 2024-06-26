@@ -23,6 +23,9 @@ import tlschannel.ServerTlsChannel;
  */
 public final class MumbleServer implements Closeable
 {
+	/**
+	 * Default port number for a mumble server.
+	 */
 	public static final int DEFAULT_PORT = 64738;
 
 	private final ServerSocketChannel serverSocketChannel;
@@ -32,19 +35,13 @@ public final class MumbleServer implements Closeable
 	private final Set<ClientContext> clientContexts = ConcurrentHashMap.newKeySet();
 
 	@NotNull
-	public static MumbleServer open(final @NotNull SSLContext sslContext) throws IOException
+	public static MumbleServer open(final @NotNull SSLContext sslContext,
+	                                final @NotNull InetSocketAddress socketAddress) throws IOException
 	{
-		return new MumbleServer(new InetSocketAddress(DEFAULT_PORT), sslContext);
+		return new MumbleServer(sslContext, socketAddress);
 	}
 
-	@NotNull
-	public static MumbleServer open(final @NotNull InetSocketAddress socketAddress,
-	                                final @NotNull SSLContext sslContext) throws IOException
-	{
-		return new MumbleServer(socketAddress, sslContext);
-	}
-
-	private MumbleServer(final @NotNull InetSocketAddress socketAddress, final @NotNull SSLContext sslContext)
+	private MumbleServer(final @NotNull SSLContext sslContext, final @NotNull InetSocketAddress socketAddress)
 			throws IOException
 	{
 		this.serverSocketChannel = ServerSocketChannel.open().bind(socketAddress);

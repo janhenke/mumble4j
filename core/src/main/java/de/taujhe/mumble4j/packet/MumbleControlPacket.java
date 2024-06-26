@@ -15,7 +15,7 @@ import MumbleProto.Mumble;
  *
  * @author Jan Henke (Jan.Henke@taujhe.de)
  */
-public sealed abstract class MumbleControlPacket permits VersionPacket
+public sealed abstract class MumbleControlPacket permits PingPacket, VersionPacket
 {
 	/**
 	 * Length of the packet header preceding every packet. It consists of
@@ -49,12 +49,13 @@ public sealed abstract class MumbleControlPacket permits VersionPacket
 
 		// TODO: Handle unknown types better
 		final PacketType packetType = PacketType.findByNetworkValue(buffer.getShort()).orElseThrow();
-		// The buffer contains the encoded message's length, but we do not need it, still we have to skip these bytes.
-		buffer.getInt();
+		final int messageLength = buffer.getInt();
+		buffer.limit(buffer.position() + messageLength);
 
 		return switch (packetType)
 		{
 			case VERSION -> new VersionPacket(Mumble.Version.parseFrom(buffer));
+			case PING -> new PingPacket(Mumble.Ping.parseFrom(buffer));
 			// TODO: Handle remaining types
 			default -> throw new IllegalStateException("Unexpected value: " + packetType);
 		};

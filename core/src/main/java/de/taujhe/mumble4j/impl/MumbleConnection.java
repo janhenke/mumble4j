@@ -56,6 +56,7 @@ public class MumbleConnection implements Closeable
 				buffer.rewind();
 				packetConsumer.accept(MumbleControlPacket.parseNetworkBuffer(buffer));
 				buffer.rewind();
+				buffer.limit(MumbleControlPacket.MAX_PACKET_LENGTH);
 			}
 			catch (final IOException e)
 			{

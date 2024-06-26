@@ -103,12 +103,6 @@
             <artifactId>annotations</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>io.github.hakky54</groupId>
-            <artifactId>sslcontext-kickstart-for-pem</artifactId>
-            <version>8.3.5</version>
-        </dependency>
-
         <!-- Testing -->
         <dependency>
             <groupId>io.quarkus</groupId>

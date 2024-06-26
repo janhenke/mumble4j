@@ -10,6 +10,7 @@ import javax.net.ssl.SSLContext;
 import de.taujhe.mumble4j.impl.Mumble4JVersion;
 import de.taujhe.mumble4j.impl.MumbleConnection;
 import de.taujhe.mumble4j.packet.MumbleControlPacket;
+import de.taujhe.mumble4j.packet.PingPacket;
 import de.taujhe.mumble4j.packet.VersionPacket;
 
 import org.jetbrains.annotations.NotNull;
@@ -71,11 +72,17 @@ public final class MumbleClient implements Closeable
 	{
 		switch (packet)
 		{
-			case VersionPacket versionPacket -> handleVersionPacket(versionPacket);
+			case VersionPacket versionPacket -> handleControlPacket(versionPacket);
+			case PingPacket pingPacket -> handleControlPacket(pingPacket);
 		}
 	}
 
-	private void handleVersionPacket(final @NotNull VersionPacket versionPacket)
+	private void handleControlPacket(final @NotNull VersionPacket versionPacket)
+	{
+
+	}
+
+	private void handleControlPacket(final @NotNull PingPacket pingPacket)
 	{
 
 	}

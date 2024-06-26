@@ -4,6 +4,7 @@ import java.io.Closeable;
 import java.io.IOException;
 
 import de.taujhe.mumble4j.packet.MumbleControlPacket;
+import de.taujhe.mumble4j.packet.PingPacket;
 import de.taujhe.mumble4j.packet.VersionPacket;
 import de.taujhe.mumble4j.server.MumbleServer;
 
@@ -36,13 +37,19 @@ public class ClientContext implements Closeable
 	{
 		switch (packet)
 		{
-			case VersionPacket versionPacket -> handleVersionPacket(versionPacket);
+			case VersionPacket versionPacket -> handleControlPacket(versionPacket);
+			case PingPacket pingPacket -> handleControlPacket(pingPacket);
 		}
 	}
 
-	private void handleVersionPacket(final @NotNull VersionPacket versionPacket)
+	private void handleControlPacket(final @NotNull VersionPacket versionPacket)
 	{
 		System.out.println(versionPacket);
+	}
+
+	private void handleControlPacket(final @NotNull PingPacket pingPacket)
+	{
+		mumbleConnection.sendPacket(new PingPacket(pingPacket.getTimestamp()));
 	}
 
 	private void handleConnectionException(final @NotNull IOException e)

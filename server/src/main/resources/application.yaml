@@ -1,3 +1,7 @@
+mumble:
+  server:
+    port: 64738
+
 quarkus:
   http:
     access-log:

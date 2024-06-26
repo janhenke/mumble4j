@@ -10,6 +10,7 @@ import MumbleProto.Mumble;
  * Mumble version packet.
  *
  * @author Jan Henke (Jan.Henke@taujhe.de)
+ * @see PacketType#VERSION
  */
 public final class VersionPacket extends MumbleControlPacket
 {
