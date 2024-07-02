@@ -7,40 +7,35 @@ import org.jetbrains.annotations.NotNull;
 import MumbleProto.Mumble;
 
 /**
- * Mumble {@code Ping} packet.
+ * Mumble {@code User State} packet.
  *
  * @author Jan Henke (Jan.Henke@taujhe.de)
- * @see PacketType#PING
+ * @see PacketType#USER_STATE
  */
-public final class PingPacket extends MumbleControlPacket
+public final class UserState extends MumbleControlPacket
 {
-	private final Mumble.Ping ping;
+	private final Mumble.UserState userState;
 
-	public PingPacket(final @NotNull Mumble.Ping ping)
+	public UserState(final Mumble.UserState userState)
 	{
-		this.ping = ping;
-	}
-
-	public long getTimestamp()
-	{
-		return ping.getTimestamp();
+		this.userState = userState;
 	}
 
 	@Override
 	protected @NotNull PacketType getPacketType()
 	{
-		return PacketType.PING;
+		return PacketType.USER_STATE;
 	}
 
 	@Override
 	protected @NotNull MessageLite getMessage()
 	{
-		return ping;
+		return userState;
 	}
 
 	@Override
 	public String toString()
 	{
-		return ping.toString();
+		return userState.toString();
 	}
 }

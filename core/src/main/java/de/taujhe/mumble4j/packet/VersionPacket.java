@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import MumbleProto.Mumble;
 
 /**
- * Mumble version packet.
+ * Mumble {@code Version} packet.
  *
  * @author Jan Henke (Jan.Henke@taujhe.de)
  * @see PacketType#VERSION
@@ -16,29 +16,12 @@ public final class VersionPacket extends MumbleControlPacket
 {
 	private final Mumble.Version version;
 
-	VersionPacket(final Mumble.Version version)
+	public VersionPacket(final Mumble.Version version)
 	{
 		this.version = version;
 	}
 
-	public VersionPacket(final int majorVersion,
-	                     final int minorVersion,
-	                     final int patchVersion,
-	                     final @NotNull String release,
-	                     final @NotNull String operatingSystemName,
-	                     final @NotNull String operatingSystemVersion)
-	{
-
-		this.version = Mumble.Version.newBuilder()
-		                             .setVersionV1(packVersionV1(majorVersion, minorVersion, patchVersion))
-		                             .setVersionV2(packVersionV2(majorVersion, minorVersion, patchVersion))
-		                             .setRelease(release)
-		                             .setOs(operatingSystemName)
-		                             .setOsVersion(operatingSystemVersion)
-		                             .build();
-	}
-
-	private int packVersionV1(final int majorVersion, final int minorVersion, final int patchVersion)
+	public static int packVersionV1(final int majorVersion, final int minorVersion, final int patchVersion)
 	{
 		// Legacy versions: These versions are kept around for backward compatibility, but
 		// have since been replaced by other version formats.
@@ -64,7 +47,7 @@ public final class VersionPacket extends MumbleControlPacket
 		return result;
 	}
 
-	private long packVersionV2(final int majorVersion, final int minorVersion, final int patchVersion)
+	public static long packVersionV2(final int majorVersion, final int minorVersion, final int patchVersion)
 	{
 		// The mumble version format (v2) is an uint64:
 		// major   minor   patch   reserved/unused

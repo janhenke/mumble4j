@@ -51,8 +51,11 @@ public final class MumbleServer implements Closeable
 			{
 				try
 				{
-					clientContexts.add(new ClientContext(ServerTlsChannel.newBuilder(serverSocketChannel.accept(),
-					                                                                 sslContext).build()));
+					final ClientContext clientContext = new ClientContext(ServerTlsChannel.newBuilder(
+							serverSocketChannel.accept(),
+							sslContext).build());
+					clientContexts.add(clientContext);
+					clientContext.sendServerHandshake();
 				}
 				catch (IOException e)
 				{

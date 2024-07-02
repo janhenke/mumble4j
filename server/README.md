@@ -4,6 +4,21 @@ This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
+<!-- TOC -->
+* [mumble4j-server](#mumble4j-server)
+  * [Configuration](#configuration)
+  * [Running the application in dev mode](#running-the-application-in-dev-mode)
+  * [Packaging and running the application](#packaging-and-running-the-application)
+  * [Creating a native executable](#creating-a-native-executable)
+<!-- TOC -->
+
+## Configuration
+
+| Key                                     | Value                                                           |
+|-----------------------------------------|-----------------------------------------------------------------|
+| quarkus.tls.mumble.key-store.pem.0.cert | Path to the TLS certificate file used for the mumble server     |
+| quarkus.tls.mumble.key-store.pem.0.key  | Path to the TLS certificate key file used for the mumble server |
+
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:

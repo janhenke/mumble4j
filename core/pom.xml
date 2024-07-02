@@ -26,6 +26,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.github.marianobarrios</groupId>
             <artifactId>tls-channel</artifactId>
         </dependency>

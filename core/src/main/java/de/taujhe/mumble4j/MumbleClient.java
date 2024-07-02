@@ -9,12 +9,15 @@ import javax.net.ssl.SSLContext;
 
 import de.taujhe.mumble4j.impl.Mumble4JVersion;
 import de.taujhe.mumble4j.impl.MumbleConnection;
+import de.taujhe.mumble4j.packet.AuthenticatePacket;
+import de.taujhe.mumble4j.packet.CryptSetupPacket;
 import de.taujhe.mumble4j.packet.MumbleControlPacket;
 import de.taujhe.mumble4j.packet.PingPacket;
 import de.taujhe.mumble4j.packet.VersionPacket;
 
 import org.jetbrains.annotations.NotNull;
 
+import MumbleProto.Mumble;
 import tlschannel.ClientTlsChannel;
 
 /**
@@ -57,15 +60,20 @@ public final class MumbleClient implements Closeable
 		// start protocol handshake
 		final Mumble4JVersion mumble4JVersion = new Mumble4JVersion();
 		// the numeric version is the Mumble version we are compatible with, not the mumble4j version
-		mumbleConnection.sendPacket(new VersionPacket(1,
-		                                              5,
-		                                              629,
-		                                              "mumble4j-"
-				                                              + mumble4JVersion.getBuildVersion()
-				                                              + "+"
-				                                              + mumble4JVersion.getGitShortCommitId(),
-		                                              System.getProperty("os.name"),
-		                                              System.getProperty("os.version")));
+		mumbleConnection.sendPacket(new VersionPacket(Mumble.Version.newBuilder()
+		                                                            .setVersionV1(VersionPacket.packVersionV1(1,
+		                                                                                                      5,
+		                                                                                                      629))
+		                                                            .setVersionV2(VersionPacket.packVersionV2(1,
+		                                                                                                      5,
+		                                                                                                      629))
+		                                                            .setRelease("mumble4j-"
+				                                                                        + mumble4JVersion.getBuildVersion()
+				                                                                        + "+"
+				                                                                        + mumble4JVersion.getGitShortCommitId())
+		                                                            .setOs(System.getProperty("os.name"))
+		                                                            .setOsVersion(System.getProperty("os.version"))
+		                                                            .build()));
 	}
 
 	private void handleMumblePacket(final @NotNull MumbleControlPacket packet)
@@ -73,7 +81,9 @@ public final class MumbleClient implements Closeable
 		switch (packet)
 		{
 			case VersionPacket versionPacket -> handleControlPacket(versionPacket);
+			case AuthenticatePacket authenticatePacket -> handleControlPacket(authenticatePacket);
 			case PingPacket pingPacket -> handleControlPacket(pingPacket);
+			default -> throw new IllegalStateException("Unexpected packet: " + packet);
 		}
 	}
 
@@ -82,7 +92,17 @@ public final class MumbleClient implements Closeable
 
 	}
 
+	private void handleControlPacket(final @NotNull AuthenticatePacket authenticatePacket)
+	{
+
+	}
+
 	private void handleControlPacket(final @NotNull PingPacket pingPacket)
+	{
+
+	}
+
+	private void handleControlPacket(final @NotNull CryptSetupPacket cryptSetupPacket)
 	{
 
 	}

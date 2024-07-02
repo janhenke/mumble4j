@@ -8,8 +8,17 @@ quarkus:
       enabled: true
   jib:
     ports: ${quarkus.http.port:8080}, 64738
+  log:
+    category:
+      "de.taujhe.mumble4j":
+        level: INFO
 
 "%dev":
   quarkus:
     console:
       color: true
+    log:
+      category:
+        "de.taujhe.mumble4j":
+          level: DEBUG
+          min-level: TRACE

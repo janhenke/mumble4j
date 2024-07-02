@@ -15,7 +15,8 @@ import MumbleProto.Mumble;
  *
  * @author Jan Henke (Jan.Henke@taujhe.de)
  */
-public sealed abstract class MumbleControlPacket permits PingPacket, VersionPacket
+public sealed abstract class MumbleControlPacket
+		permits VersionPacket, AuthenticatePacket, PingPacket, ServerSync, ChannelState, UserState, CryptSetupPacket
 {
 	/**
 	 * Length of the packet header preceding every packet. It consists of
@@ -54,10 +55,18 @@ public sealed abstract class MumbleControlPacket permits PingPacket, VersionPack
 
 		return switch (packetType)
 		{
-			case VERSION -> new VersionPacket(Mumble.Version.parseFrom(buffer));
-			case PING -> new PingPacket(Mumble.Ping.parseFrom(buffer));
 			// TODO: Handle remaining types
-			default -> throw new IllegalStateException("Unexpected value: " + packetType);
+			case VERSION -> new VersionPacket(Mumble.Version.parseFrom(buffer));
+			case AUTHENTICATE -> new AuthenticatePacket(Mumble.Authenticate.parseFrom(buffer));
+			case PING -> new PingPacket(Mumble.Ping.parseFrom(buffer));
+			case SERVER_SYNC -> new ServerSync(Mumble.ServerSync.parseFrom(buffer));
+			case CHANNEL_STATE -> new ChannelState(Mumble.ChannelState.parseFrom(buffer));
+			case USER_STATE -> new UserState(Mumble.UserState.parseFrom(buffer));
+			case CRYPT_SETUP -> new CryptSetupPacket(Mumble.CryptSetup.parseFrom(buffer));
+			case UDP_TUNNEL, REJECT, CHANNEL_REMOVE, USER_REMOVE, BAN_LIST, TEXT_MESSAGE, PERMISSION_DENIED, ACL,
+			     QUERY_USERS, CONTEXT_ACTION_MODIFY, CONTEXT_ACTION, USER_LIST, VOICE_TARGET, PERMISSION_QUERY,
+			     CODEC_VERSION, USER_STATS, REQUEST_BLOB, SERVER_CONFIG, SUGGEST_CONFIG ->
+					throw new IllegalStateException("Unexpected value: " + packetType);
 		};
 	}
 
@@ -65,11 +74,13 @@ public sealed abstract class MumbleControlPacket permits PingPacket, VersionPack
 	{
 		final PacketType packetType = getPacketType();
 		final MessageLite message = getMessage();
+		final int serializedSize = message.getSerializedSize();
 
 		// The protocol is defined in big endian byte order
 		buffer.order(ByteOrder.BIG_ENDIAN);
 		buffer.putShort(packetType.getNetworkValue());
-		buffer.putInt(message.getSerializedSize());
+		buffer.putInt(serializedSize);
+		buffer.limit(buffer.position() + serializedSize);
 
 		message.toByteString().copyTo(buffer);
 	}

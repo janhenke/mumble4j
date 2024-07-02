@@ -80,6 +80,7 @@ public class MumbleConnection implements Closeable
 				buffer.rewind();
 				tlsChannel.write(buffer);
 				buffer.rewind();
+				buffer.limit(MumbleControlPacket.MAX_PACKET_LENGTH);
 			}
 			catch (InterruptedException e)
 			{
