@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 
 import com.google.protobuf.ByteString;
 
+import de.taujhe.mumble4j.MumbleServer;
 import de.taujhe.mumble4j.packet.AuthenticatePacket;
 import de.taujhe.mumble4j.packet.ChannelState;
 import de.taujhe.mumble4j.packet.CryptSetupPacket;
@@ -14,7 +15,6 @@ import de.taujhe.mumble4j.packet.PingPacket;
 import de.taujhe.mumble4j.packet.ServerSync;
 import de.taujhe.mumble4j.packet.UserState;
 import de.taujhe.mumble4j.packet.VersionPacket;
-import de.taujhe.mumble4j.server.MumbleServer;
 
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -35,9 +35,12 @@ public class ClientContext implements Closeable
 
 	private final MumbleConnection mumbleConnection;
 
-	public ClientContext(final @NotNull ServerTlsChannel tlsChannel)
+	private final int sessionId;
+
+	public ClientContext(final int sessionId, final @NotNull ServerTlsChannel tlsChannel)
 	{
 		mumbleConnection = new MumbleConnection(tlsChannel, this::handleMumblePacket, this::handleConnectionException);
+		this.sessionId = sessionId;
 	}
 
 	@Override
