@@ -6,10 +6,6 @@
 version: 2
 updates:
   - package-ecosystem: "maven" # See documentation for possible values
-    directories: # Location of package manifests
-      - "/"
-      - "/core"
-      - "/client"
-      - "/server"
+    directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
