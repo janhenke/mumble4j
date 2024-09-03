@@ -69,7 +69,7 @@
             <dependency>
                 <groupId>com.github.marianobarrios</groupId>
                 <artifactId>tls-channel</artifactId>
-                <version>0.9.0</version>
+                <version>0.9.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
