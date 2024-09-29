@@ -12,6 +12,9 @@ quarkus:
     category:
       "de.taujhe.mumble4j":
         level: INFO
+  otel:
+    metrics:
+      enabled: true
 
 "%dev":
   quarkus:

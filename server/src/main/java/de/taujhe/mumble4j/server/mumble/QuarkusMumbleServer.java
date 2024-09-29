@@ -15,9 +15,11 @@ import org.slf4j.LoggerFactory;
 
 import io.quarkus.runtime.Shutdown;
 import io.quarkus.runtime.Startup;
+import io.quarkus.tls.CertificateUpdatedEvent;
 import io.quarkus.tls.TlsConfiguration;
 import io.quarkus.tls.TlsConfigurationRegistry;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 
 /**
@@ -57,6 +59,12 @@ public class QuarkusMumbleServer implements Closeable
 		{
 			LOGGER.error("Failed to create SSLContext", e);
 			throw new RuntimeException(e);
+		}
+	}
+
+	public void onReload(@Observes final CertificateUpdatedEvent event) {
+		if ("<default>".equals(event.name())) {
+			// TODO: Implement reload of SSLContext
 		}
 	}
 
