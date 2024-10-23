@@ -15,9 +15,9 @@ import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.Startup;
 import io.quarkus.tls.CertificateUpdatedEvent;
 import io.quarkus.tls.TlsConfigurationRegistry;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 /**
  * Implementation of {@link MumbleServer}, using the Quarkus framework.
@@ -25,7 +25,7 @@ import jakarta.inject.Inject;
  * @author Jan Henke (Jan.Henke@taujhe.de)
  */
 @Startup
-@ApplicationScoped
+@Singleton
 public class QuarkusMumbleServer extends MumbleServer
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(QuarkusMumbleServer.class);
