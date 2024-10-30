@@ -9,21 +9,19 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
  *
  * @author Jan Henke (Jan.Henke@taujhe.de)
  */
-public class MumbleClientApplication
+public class MumbleClientApplication extends JFrame
 {
-	private final JFrame mainFrame;
-
 	public MumbleClientApplication()
 	{
-		mainFrame = new JFrame("Mumble4j Client");
-		mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		super("Mumble4j Client");
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 
 	public void showWindow()
 	{
-		mainFrame.pack();
-		mainFrame.setLocationRelativeTo(null);
-		mainFrame.setVisible(true);
+		pack();
+		setLocationRelativeTo(null);
+		setVisible(true);
 	}
 
 	public static void main(String[] args)
@@ -31,7 +29,6 @@ public class MumbleClientApplication
 		FlatMacDarkLaf.setup();
 
 		final MumbleClientApplication clientApplication = new MumbleClientApplication();
-
 		SwingUtilities.invokeLater(clientApplication::showWindow);
 	}
 }
