@@ -28,6 +28,11 @@ public class MumbleClientApplication
 
 	public static void main(String[] args)
 	{
+		if (System.getProperty("os.name").toLowerCase().contains("mac"))
+		{
+			// respect light/dark mode on macOS
+			System.setProperty("apple.awt.application.appearance", "system");
+		}
 		FlatMacDarkLaf.setup();
 
 		final MumbleClientApplication clientApplication = new MumbleClientApplication();
