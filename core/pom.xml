@@ -16,7 +16,7 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <protobuf.Version>3.25.5</protobuf.Version>
+        <protobuf.Version>4.29.3</protobuf.Version>
     </properties>
 
     <dependencies>
