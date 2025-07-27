@@ -1,8 +1,5 @@
 package de.taujhe.mumble4j.server.mumble;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
-
 import de.taujhe.mumble4j.MumbleServer;
 import de.taujhe.mumble4j.server.persistence.RegisteredUserRepository;
 
@@ -18,6 +15,8 @@ import io.quarkus.tls.TlsConfigurationRegistry;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import java.io.IOException;
+import java.net.InetSocketAddress;
 
 /**
  * Implementation of {@link MumbleServer}, using the Quarkus framework.
@@ -76,6 +75,6 @@ public class QuarkusMumbleServer extends MumbleServer
 	@Override
 	protected boolean isUsernameRegistered(@NotNull final String username)
 	{
-		return registeredUserRepository.isUsernameRegistered(username);
+		return registeredUserRepository.countByUsername(username) > 0;
 	}
 }
