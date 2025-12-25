@@ -1,14 +1,13 @@
 package de.taujhe.mumble4j.packet;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageLite;
 
 import org.jetbrains.annotations.NotNull;
 
 import MumbleProto.Mumble;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 /**
  * Base class for Mumble network packets.
@@ -47,6 +46,7 @@ public sealed abstract class MumbleControlPacket
 	{
 		// The protocol is defined in big endian byte order
 		buffer.order(ByteOrder.BIG_ENDIAN);
+		buffer.rewind();
 
 		// TODO: Handle unknown types better
 		final PacketType packetType = PacketType.findByNetworkValue(buffer.getShort()).orElseThrow();

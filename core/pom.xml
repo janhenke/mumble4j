@@ -10,13 +10,13 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mumble4j-core</artifactId>
+    <groupId>de.taujhe.mumble4j</groupId>
+    <artifactId>core</artifactId>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <protobuf.Version>3.25.5</protobuf.Version>
+        <protobuf.Version>3.25.8</protobuf.Version>
     </properties>
 
     <dependencies>
@@ -87,7 +87,9 @@
                 </executions>
                 <configuration>
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+                    <generateGitPropertiesFilename>
+                        ${project.build.outputDirectory}/git.properties
+                    </generateGitPropertiesFilename>
                     <includeOnlyProperties>
                         <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
                         <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>

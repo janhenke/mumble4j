@@ -1,17 +1,13 @@
 package de.taujhe.mumble4j.impl;
 
-import java.io.Closeable;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Consumer;
-
 import de.taujhe.mumble4j.packet.MumbleControlPacket;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Closeable;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.util.concurrent.Executor;
 import tlschannel.TlsChannel;
 
 /**
@@ -19,92 +15,66 @@ import tlschannel.TlsChannel;
  *
  * @author Jan Henke (Jan.Henke@taujhe.de)
  */
-public class MumbleConnection implements Closeable
+public abstract class MumbleConnection implements Closeable
 {
+	/// Default port number for a mumble server.
+	public static final int DEFAULT_PORT = 64738;
+
+	private final Executor executor;
 	private final TlsChannel tlsChannel;
-	private final Consumer<MumbleControlPacket> packetConsumer;
-	private final Consumer<IOException> exceptionConsumer;
 
-	private final BlockingQueue<MumbleControlPacket> writeQueue = new LinkedBlockingQueue<>();
-
-	private final AtomicBoolean running = new AtomicBoolean(true);
-	private final Thread readThread;
-	private final Thread writeThread;
-
-	public MumbleConnection(@NotNull final TlsChannel tlsChannel,
-	                        @NotNull final Consumer<MumbleControlPacket> packetConsumer,
-	                        @NotNull final Consumer<IOException> exceptionConsumer)
+	protected MumbleConnection(final Executor executor, final TlsChannel tlsChannel)
 	{
+		this.executor = executor;
 		this.tlsChannel = tlsChannel;
-		this.packetConsumer = packetConsumer;
-		this.exceptionConsumer = exceptionConsumer;
 
-		readThread = Thread.ofVirtual().start(this::readPackets);
-		writeThread = Thread.ofVirtual().start(this::processWriteQueue);
+		executor.execute(this::readPacket);
 	}
 
-	private void readPackets()
-	{
-		final ByteBuffer buffer = ByteBuffer.allocateDirect(MumbleControlPacket.MAX_PACKET_LENGTH);
+	protected abstract void acceptPacket(final @NotNull MumbleControlPacket packet);
 
-		while (running.get())
+	protected abstract void handleException(final @NotNull IOException e);
+
+	private void readPacket()
+	{
+		final ByteBuffer buffer = ByteBuffer.allocate(MumbleControlPacket.MAX_PACKET_LENGTH);
+		try
 		{
-			try
-			{
-				// blocks until ready
-				tlsChannel.read(buffer);
-				buffer.rewind();
-				packetConsumer.accept(MumbleControlPacket.parseNetworkBuffer(buffer));
-				buffer.rewind();
-				buffer.limit(MumbleControlPacket.MAX_PACKET_LENGTH);
-			}
-			catch (final IOException e)
-			{
-				exceptionConsumer.accept(e);
-			}
+			// blocks until ready
+			tlsChannel.read(buffer);
+			executor.execute(this::readPacket);
+			acceptPacket(MumbleControlPacket.parseNetworkBuffer(buffer));
+		}
+		catch (final IOException e)
+		{
+			handleException(e);
 		}
 	}
 
-	private void processWriteQueue()
+	private void writePacket(final @NotNull MumbleControlPacket packet)
 	{
-		final ByteBuffer buffer = ByteBuffer.allocateDirect(MumbleControlPacket.MAX_PACKET_LENGTH);
-
-		while (running.get())
+		final ByteBuffer buffer = ByteBuffer.allocate(MumbleControlPacket.MAX_PACKET_LENGTH);
+		try
 		{
-			try
-			{
-				// blocks until ready
-				final MumbleControlPacket packet = writeQueue.take();
-
-				packet.serialize(buffer);
-				buffer.rewind();
-				tlsChannel.write(buffer);
-				buffer.rewind();
-				buffer.limit(MumbleControlPacket.MAX_PACKET_LENGTH);
-			}
-			catch (InterruptedException e)
-			{
-				// end the loop
-				break;
-			}
-			catch (IOException e)
-			{
-				exceptionConsumer.accept(e);
-			}
+			packet.serialize(buffer);
+			buffer.rewind();
+			// blocks until ready
+			tlsChannel.write(buffer);
+		}
+		catch (IOException e)
+		{
+			handleException(e);
 		}
 	}
 
-	public boolean sendPacket(final @NotNull MumbleControlPacket packet)
+	public void sendPacket(final @NotNull MumbleControlPacket packet)
 	{
-		return writeQueue.offer(packet);
+		executor.execute(() -> writePacket(packet));
 	}
 
 	@Override
 	public void close() throws IOException
 	{
 		tlsChannel.close();
-		running.set(false);
-		readThread.interrupt();
-		writeThread.interrupt();
 	}
 }

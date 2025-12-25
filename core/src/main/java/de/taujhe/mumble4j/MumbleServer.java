@@ -1,22 +1,22 @@
 package de.taujhe.mumble4j;
 
+import javax.net.ssl.SSLContext;
+
+import de.taujhe.mumble4j.impl.ClientSession;
+import de.taujhe.mumble4j.impl.SessionId;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.Set;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
-import javax.net.ssl.SSLContext;
-
-import de.taujhe.mumble4j.impl.ClientContext;
-
-import org.jetbrains.annotations.NotNull;
-
 import tlschannel.ServerTlsChannel;
 
 /**
@@ -29,16 +29,9 @@ import tlschannel.ServerTlsChannel;
  */
 public abstract class MumbleServer implements Closeable
 {
-	/**
-	 * Default port number for a mumble server.
-	 */
-	public static final int DEFAULT_PORT = 64738;
-
-	private final AtomicInteger sessionIdGenerator = new AtomicInteger(1);
-
 	private ServerSocketChannel serverSocketChannel;
 	private final ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor();
-	private final Set<ClientContext> clientContexts = ConcurrentHashMap.newKeySet();
+	private final Map<SessionId, ClientSession> clientSessions = new ConcurrentHashMap<>();
 
 	protected MumbleServer(final @NotNull InetSocketAddress socketAddress, final @NotNull SSLContext sslContext)
 			throws IOException
@@ -55,10 +48,10 @@ public abstract class MumbleServer implements Closeable
 		{
 			final SocketChannel socketChannel = serverSocketChannel.accept();
 			final ServerTlsChannel tlsChannel = ServerTlsChannel.newBuilder(socketChannel, sslContext).build();
-			final ClientContext clientContext = new ClientContext(sessionIdGenerator.incrementAndGet(), tlsChannel);
-			clientContexts.add(clientContext);
+			final ClientSession clientSession = new ClientSession(executorService, tlsChannel);
+			clientSessions.put(clientSession.getSessionId(), clientSession);
 
-			clientContext.sendServerHandshake();
+			clientSession.sendServerHandshake();
 		}
 		catch (final IOException e)
 		{
@@ -85,10 +78,10 @@ public abstract class MumbleServer implements Closeable
 	{
 		serverSocketChannel.close();
 		executorService.shutdown();
-		clientContexts.forEach(clientContext -> {
+		clientSessions.values().forEach(clientSession -> {
 			try
 			{
-				clientContext.close();
+				clientSession.close();
 			}
 			catch (IOException e)
 			{

@@ -40,16 +40,15 @@
     </modules>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>de.taujhe</groupId>
-                <artifactId>mumble4j-core</artifactId>
+                <groupId>de.taujhe.mumble4j</groupId>
+                <artifactId>core</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -62,7 +61,7 @@
             <dependency>
                 <groupId>org.jetbrains</groupId>
                 <artifactId>annotations</artifactId>
-                <version>26.0.1</version>
+                <version>26.0.2</version>
             </dependency>
 
             <dependency>

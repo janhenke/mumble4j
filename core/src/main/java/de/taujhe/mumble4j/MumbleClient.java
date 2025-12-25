@@ -1,10 +1,5 @@
 package de.taujhe.mumble4j;
 
-import java.io.Closeable;
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.nio.channels.SocketChannel;
-import java.security.NoSuchAlgorithmException;
 import javax.net.ssl.SSLContext;
 
 import de.taujhe.mumble4j.impl.Mumble4JVersion;
@@ -18,6 +13,12 @@ import de.taujhe.mumble4j.packet.VersionPacket;
 import org.jetbrains.annotations.NotNull;
 
 import MumbleProto.Mumble;
+import java.io.Closeable;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.channels.SocketChannel;
+import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.Executors;
 import tlschannel.ClientTlsChannel;
 
 /**
@@ -25,9 +26,8 @@ import tlschannel.ClientTlsChannel;
  *
  * @author Jan Henke (Jan.Henke@taujhe.de)
  */
-public final class MumbleClient implements Closeable
+public final class MumbleClient extends MumbleConnection implements Closeable
 {
-	private final MumbleConnection mumbleConnection;
 
 	@NotNull
 	public static MumbleClient connect(final @NotNull InetSocketAddress address) throws IOException
@@ -52,31 +52,26 @@ public final class MumbleClient implements Closeable
 	private MumbleClient(final @NotNull InetSocketAddress socketAddress, final @NotNull SSLContext sslContext)
 			throws IOException
 	{
-		final SocketChannel socketChannel = SocketChannel.open(socketAddress);
-		mumbleConnection = new MumbleConnection(ClientTlsChannel.newBuilder(socketChannel, sslContext).build(),
-		                                        this::handleMumblePacket,
-		                                        this::handleConnectionException);
+		super(Executors.newVirtualThreadPerTaskExecutor(),
+		      ClientTlsChannel.newBuilder(SocketChannel.open(socketAddress), sslContext).build());
 
 		// start protocol handshake
 		final Mumble4JVersion mumble4JVersion = new Mumble4JVersion();
 		// the numeric version is the Mumble version we are compatible with, not the mumble4j version
-		mumbleConnection.sendPacket(new VersionPacket(Mumble.Version.newBuilder()
-		                                                            .setVersionV1(VersionPacket.packVersionV1(1,
-		                                                                                                      5,
-		                                                                                                      629))
-		                                                            .setVersionV2(VersionPacket.packVersionV2(1,
-		                                                                                                      5,
-		                                                                                                      629))
-		                                                            .setRelease("mumble4j-"
-				                                                                        + mumble4JVersion.getBuildVersion()
-				                                                                        + "+"
-				                                                                        + mumble4JVersion.getGitShortCommitId())
-		                                                            .setOs(System.getProperty("os.name"))
-		                                                            .setOsVersion(System.getProperty("os.version"))
-		                                                            .build()));
+		sendPacket(new VersionPacket(Mumble.Version.newBuilder()
+		                                           .setVersionV1(VersionPacket.packVersionV1(1, 5, 629))
+		                                           .setVersionV2(VersionPacket.packVersionV2(1, 5, 629))
+		                                           .setRelease("mumble4j-"
+				                                                       + mumble4JVersion.getBuildVersion()
+				                                                       + "+"
+				                                                       + mumble4JVersion.getGitShortCommitId())
+		                                           .setOs(System.getProperty("os.name"))
+		                                           .setOsVersion(System.getProperty("os.version"))
+		                                           .build()));
 	}
 
-	private void handleMumblePacket(final @NotNull MumbleControlPacket packet)
+	@Override
+	protected void acceptPacket(final @NotNull MumbleControlPacket packet)
 	{
 		switch (packet)
 		{
@@ -107,14 +102,9 @@ public final class MumbleClient implements Closeable
 
 	}
 
-	private void handleConnectionException(final @NotNull IOException e)
-	{
-
-	}
-
 	@Override
-	public void close() throws IOException
+	protected void handleException(final @NotNull IOException e)
 	{
-		mumbleConnection.close();
+
 	}
 }

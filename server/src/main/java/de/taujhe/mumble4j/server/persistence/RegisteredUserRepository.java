@@ -3,7 +3,6 @@ package de.taujhe.mumble4j.server.persistence;
 import org.jetbrains.annotations.NotNull;
 
 import jakarta.data.repository.BasicRepository;
-import jakarta.data.repository.By;
 import jakarta.data.repository.Query;
 import jakarta.data.repository.Repository;
 
@@ -16,5 +15,5 @@ import jakarta.data.repository.Repository;
 public interface RegisteredUserRepository extends BasicRepository<RegisteredUserEntity, Long>
 {
 	@Query("select count(r) from RegisteredUserEntity r where r.username = :username")
-	long countByUsername(@By("username") @NotNull String username);
+	long countByUsername(@NotNull String username);
 }
