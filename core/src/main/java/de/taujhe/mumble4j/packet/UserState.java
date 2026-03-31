@@ -2,7 +2,7 @@ package de.taujhe.mumble4j.packet;
 
 import com.google.protobuf.MessageLite;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import MumbleProto.Mumble;
 
@@ -12,6 +12,7 @@ import MumbleProto.Mumble;
  * @author Jan Henke (Jan.Henke@taujhe.de)
  * @see PacketType#USER_STATE
  */
+@NullMarked
 public final class UserState extends MumbleControlPacket
 {
 	private final Mumble.UserState userState;
@@ -22,13 +23,13 @@ public final class UserState extends MumbleControlPacket
 	}
 
 	@Override
-	protected @NotNull PacketType getPacketType()
+	protected PacketType getPacketType()
 	{
 		return PacketType.USER_STATE;
 	}
 
 	@Override
-	protected @NotNull MessageLite getMessage()
+	protected MessageLite getMessage()
 	{
 		return userState;
 	}

@@ -1,13 +1,12 @@
 package de.taujhe.mumble4j.packet;
 
-import java.nio.ByteBuffer;
-import java.util.List;
-
 import com.google.protobuf.MessageLite;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import MumbleProto.Mumble;
+import java.nio.ByteBuffer;
+import java.util.List;
 
 /**
  * Mumble {@code Channel State} packet.
@@ -15,6 +14,7 @@ import MumbleProto.Mumble;
  * @author Jan Henke (Jan.Henke@taujhe.de)
  * @see PacketType#CHANNEL_STATE
  */
+@NullMarked
 public final class ChannelState extends MumbleControlPacket
 {
 	private final Mumble.ChannelState channelState;
@@ -34,12 +34,12 @@ public final class ChannelState extends MumbleControlPacket
 		return channelState.getParent();
 	}
 
-	public @NotNull String getName()
+	public String getName()
 	{
 		return channelState.getName();
 	}
 
-	public @NotNull List<Integer> getLinks()
+	public List<Integer> getLinks()
 	{
 		return channelState.getLinksList();
 	}
@@ -49,17 +49,17 @@ public final class ChannelState extends MumbleControlPacket
 		return channelState.getTemporary();
 	}
 
-	public @NotNull String getDescription()
+	public String getDescription()
 	{
 		return channelState.getDescription();
 	}
 
-	public @NotNull List<Integer> getLinksAdd()
+	public List<Integer> getLinksAdd()
 	{
 		return channelState.getLinksAddList();
 	}
 
-	public @NotNull List<Integer> getLinksRemove()
+	public List<Integer> getLinksRemove()
 	{
 		return channelState.getLinksRemoveList();
 	}
@@ -84,19 +84,19 @@ public final class ChannelState extends MumbleControlPacket
 		return channelState.getPosition();
 	}
 
-	public @NotNull ByteBuffer getDescriptionHash()
+	public ByteBuffer getDescriptionHash()
 	{
 		return channelState.getDescriptionHash().asReadOnlyByteBuffer();
 	}
 
 	@Override
-	protected @NotNull PacketType getPacketType()
+	protected PacketType getPacketType()
 	{
 		return PacketType.CHANNEL_STATE;
 	}
 
 	@Override
-	protected @NotNull MessageLite getMessage()
+	protected MessageLite getMessage()
 	{
 		return channelState;
 	}

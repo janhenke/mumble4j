@@ -1,17 +1,18 @@
 package de.taujhe.mumble4j.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.OffsetDateTime;
 import java.util.Properties;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Access to embedded release information.
  *
  * @author Jan Henke (Jan.Henke@taujhe.de)
  */
+@NullMarked
 public class Mumble4JVersion
 {
 	private final Properties properties = new Properties();
@@ -24,25 +25,21 @@ public class Mumble4JVersion
 		}
 	}
 
-	@NotNull
 	public OffsetDateTime getBuildTime()
 	{
 		return OffsetDateTime.parse(properties.getProperty("git.build.time"));
 	}
 
-	@NotNull
 	public String getBuildVersion()
 	{
 		return properties.getProperty("git.build.version");
 	}
 
-	@NotNull
 	public String getGitShortCommitId()
 	{
 		return properties.getProperty("git.commit.id.abbrev");
 	}
 
-	@NotNull
 	public String getGitCommitId()
 	{
 		return properties.getProperty("git.commit.id.full");

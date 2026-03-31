@@ -1,6 +1,6 @@
 package de.taujhe.mumble4j.packet;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -10,6 +10,7 @@ import java.util.Optional;
  *
  * @author Jan Henke (Jan.Henke@taujhe.de)
  */
+@NullMarked
 public enum PacketType
 {
 	/**
@@ -56,7 +57,6 @@ public enum PacketType
 		return networkValue;
 	}
 
-	@NotNull
 	public static Optional<PacketType> findByNetworkValue(final short networkValue)
 	{
 		return Arrays.stream(values()).filter(packetType -> packetType.getNetworkValue() == networkValue).findFirst();

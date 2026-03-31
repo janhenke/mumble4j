@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import com.google.protobuf.MessageLite;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import MumbleProto.Mumble;
 
@@ -16,6 +16,7 @@ import MumbleProto.Mumble;
  * @author Jan Henke (Jan.Henke@taujhe.de)
  * @see PacketType#AUTHENTICATE
  */
+@NullMarked
 public final class AuthenticatePacket extends MumbleControlPacket
 {
 	/**
@@ -39,7 +40,7 @@ public final class AuthenticatePacket extends MumbleControlPacket
 			return protocolValue;
 		}
 
-		public static @NotNull Optional<ClientType> findByProtocolValue(final int protocolValue)
+		public static Optional<ClientType> findByProtocolValue(final int protocolValue)
 		{
 			return Arrays.stream(values()).filter(clientType -> protocolValue == clientType.protocolValue).findAny();
 		}
@@ -47,27 +48,27 @@ public final class AuthenticatePacket extends MumbleControlPacket
 
 	private final Mumble.Authenticate authenticate;
 
-	public AuthenticatePacket(final @NotNull Mumble.Authenticate authenticate)
+	public AuthenticatePacket(final Mumble.Authenticate authenticate)
 	{
 		this.authenticate = authenticate;
 	}
 
-	public @NotNull String getUsername()
+	public String getUsername()
 	{
 		return authenticate.getUsername();
 	}
 
-	public @NotNull String getPassword()
+	public String getPassword()
 	{
 		return authenticate.getPassword();
 	}
 
-	public @NotNull List<String> getTokens()
+	public List<String> getTokens()
 	{
 		return authenticate.getTokensList();
 	}
 
-	public @NotNull List<Integer> getCeltVersions()
+	public List<Integer> getCeltVersions()
 	{
 		return authenticate.getCeltVersionsList();
 	}
@@ -77,19 +78,19 @@ public final class AuthenticatePacket extends MumbleControlPacket
 		return authenticate.getOpus();
 	}
 
-	public @NotNull ClientType getClientType()
+	public ClientType getClientType()
 	{
 		return ClientType.findByProtocolValue(authenticate.getClientType()).orElseThrow();
 	}
 
 	@Override
-	protected @NotNull PacketType getPacketType()
+	protected PacketType getPacketType()
 	{
 		return PacketType.AUTHENTICATE;
 	}
 
 	@Override
-	protected @NotNull MessageLite getMessage()
+	protected MessageLite getMessage()
 	{
 		return authenticate;
 	}

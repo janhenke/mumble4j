@@ -12,14 +12,14 @@ import de.taujhe.mumble4j.packet.ServerSync;
 import de.taujhe.mumble4j.packet.UserState;
 import de.taujhe.mumble4j.packet.VersionPacket;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import MumbleProto.Mumble;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 import tlschannel.ServerTlsChannel;
 
@@ -29,6 +29,7 @@ import tlschannel.ServerTlsChannel;
  * @author Jan Henke (Jan.Henke@taujhe.de)
  * @see MumbleServer
  */
+@NullMarked
 public class ClientSession extends MumbleConnection
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ClientSession.class);
@@ -37,7 +38,7 @@ public class ClientSession extends MumbleConnection
 
 	private final SessionId sessionId;
 
-	public ClientSession(final @NotNull Executor executor, final @NotNull ServerTlsChannel tlsChannel)
+	public ClientSession(final ExecutorService executor, final ServerTlsChannel tlsChannel)
 	{
 		super(executor, tlsChannel);
 		this.sessionId = new SessionId(sessionIdGenerator.incrementAndGet());
@@ -80,11 +81,11 @@ public class ClientSession extends MumbleConnection
 		                                         .setName("Foo")
 		                                         .setChannelId(0)
 		                                         .build()));
-		sendPacket(new ServerSync(Mumble.ServerSync.newBuilder().setSession(0).setWelcomeText("Hi!").build()));
+		sendPacket(new ServerSync(Mumble.ServerSync.newBuilder().setSession(sessionId.value()).setWelcomeText("Hi!").build()));
 	}
 
 	@Override
-	protected void acceptPacket(final @NotNull MumbleControlPacket packet)
+	protected void acceptPacket(final MumbleControlPacket packet)
 	{
 		switch (packet)
 		{
@@ -98,44 +99,44 @@ public class ClientSession extends MumbleConnection
 		}
 	}
 
-	private void handleControlPacket(final @NotNull VersionPacket versionPacket)
+	private void handleControlPacket(final VersionPacket versionPacket)
 	{
 		LOGGER.debug(versionPacket.toString());
 	}
 
-	private void handleControlPacket(final @NotNull AuthenticatePacket authenticatePacket)
+	private void handleControlPacket(final AuthenticatePacket authenticatePacket)
 	{
 		LOGGER.debug(authenticatePacket.toString());
 	}
 
-	private void handleControlPacket(final @NotNull PingPacket pingPacket)
+	private void handleControlPacket(final PingPacket pingPacket)
 	{
 		LOGGER.trace(pingPacket.toString());
 		sendPacket(new PingPacket(Mumble.Ping.newBuilder().setTimestamp(pingPacket.getTimestamp()).build()));
 	}
 
-	private void handleControlPacket(final @NotNull ServerSync serverSync)
+	private void handleControlPacket(final ServerSync serverSync)
 	{
 		LOGGER.debug(serverSync.toString());
 	}
 
-	private void handleControlPacket(final @NotNull ChannelState channelState)
+	private void handleControlPacket(final ChannelState channelState)
 	{
 		LOGGER.debug(channelState.toString());
 	}
 
-	private void handleControlPacket(final @NotNull UserState userState)
+	private void handleControlPacket(final UserState userState)
 	{
 		LOGGER.debug(userState.toString());
 	}
 
-	private void handleControlPacket(final @NotNull CryptSetupPacket cryptSetupPacket)
+	private void handleControlPacket(final CryptSetupPacket cryptSetupPacket)
 	{
 		LOGGER.debug(cryptSetupPacket.toString());
 	}
 
 	@Override
-	protected void handleException(final @NotNull IOException e)
+	protected void handleException(final IOException e)
 	{
 		LOGGER.debug("Connection error", e);
 	}

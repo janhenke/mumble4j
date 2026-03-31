@@ -5,7 +5,7 @@ import javax.net.ssl.SSLContext;
 import de.taujhe.mumble4j.impl.ClientSession;
 import de.taujhe.mumble4j.impl.SessionId;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -27,13 +27,14 @@ import tlschannel.ServerTlsChannel;
  *
  * @author Jan Henke (Jan.Henke@taujhe.de)
  */
+@NullMarked
 public abstract class MumbleServer implements Closeable
 {
 	private ServerSocketChannel serverSocketChannel;
 	private final ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor();
 	private final Map<SessionId, ClientSession> clientSessions = new ConcurrentHashMap<>();
 
-	protected MumbleServer(final @NotNull InetSocketAddress socketAddress, final @NotNull SSLContext sslContext)
+	protected MumbleServer(final InetSocketAddress socketAddress, final SSLContext sslContext)
 			throws IOException
 	{
 		// IOException here is fatal, if this fails, this object is useless. Therefore, let the caller handle it
@@ -41,8 +42,8 @@ public abstract class MumbleServer implements Closeable
 		executorService.submit(() -> acceptConnection(serverSocketChannel, sslContext));
 	}
 
-	private void acceptConnection(final @NotNull ServerSocketChannel serverSocketChannel,
-	                              final @NotNull SSLContext sslContext)
+	private void acceptConnection(final ServerSocketChannel serverSocketChannel,
+	                              final SSLContext sslContext)
 	{
 		try
 		{
@@ -60,7 +61,7 @@ public abstract class MumbleServer implements Closeable
 		executorService.submit(() -> acceptConnection(serverSocketChannel, sslContext));
 	}
 
-	protected void setSSLContext(final @NotNull SSLContext sslContext) throws IOException
+	protected void setSSLContext(final SSLContext sslContext) throws IOException
 	{
 		final SocketAddress socketAddress = serverSocketChannel.getLocalAddress();
 		serverSocketChannel.close();
@@ -69,9 +70,9 @@ public abstract class MumbleServer implements Closeable
 		executorService.submit(() -> acceptConnection(serverSocketChannel, sslContext));
 	}
 
-	protected abstract void handleException(final @NotNull IOException e);
+	protected abstract void handleException(final IOException e);
 
-	protected abstract boolean isUsernameRegistered(@NotNull String username);
+	protected abstract boolean isUsernameRegistered(String username);
 
 	@Override
 	public void close() throws IOException

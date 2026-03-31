@@ -10,7 +10,7 @@ import de.taujhe.mumble4j.packet.MumbleControlPacket;
 import de.taujhe.mumble4j.packet.PingPacket;
 import de.taujhe.mumble4j.packet.VersionPacket;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import MumbleProto.Mumble;
 import java.io.Closeable;
@@ -26,11 +26,11 @@ import tlschannel.ClientTlsChannel;
  *
  * @author Jan Henke (Jan.Henke@taujhe.de)
  */
+@NullMarked
 public final class MumbleClient extends MumbleConnection implements Closeable
 {
 
-	@NotNull
-	public static MumbleClient connect(final @NotNull InetSocketAddress address) throws IOException
+	public static MumbleClient connect(final InetSocketAddress address) throws IOException
 	{
 		try
 		{
@@ -42,14 +42,13 @@ public final class MumbleClient extends MumbleConnection implements Closeable
 		}
 	}
 
-	@NotNull
-	public static MumbleClient connect(final @NotNull InetSocketAddress address, final @NotNull SSLContext sslContext)
+	public static MumbleClient connect(final InetSocketAddress address, final SSLContext sslContext)
 			throws IOException
 	{
 		return new MumbleClient(address, sslContext);
 	}
 
-	private MumbleClient(final @NotNull InetSocketAddress socketAddress, final @NotNull SSLContext sslContext)
+	private MumbleClient(final InetSocketAddress socketAddress, final SSLContext sslContext)
 			throws IOException
 	{
 		super(Executors.newVirtualThreadPerTaskExecutor(),
@@ -71,7 +70,7 @@ public final class MumbleClient extends MumbleConnection implements Closeable
 	}
 
 	@Override
-	protected void acceptPacket(final @NotNull MumbleControlPacket packet)
+	protected void acceptPacket(final MumbleControlPacket packet)
 	{
 		switch (packet)
 		{
@@ -82,28 +81,28 @@ public final class MumbleClient extends MumbleConnection implements Closeable
 		}
 	}
 
-	private void handleControlPacket(final @NotNull VersionPacket versionPacket)
+	private void handleControlPacket(final VersionPacket versionPacket)
 	{
 
 	}
 
-	private void handleControlPacket(final @NotNull AuthenticatePacket authenticatePacket)
+	private void handleControlPacket(final AuthenticatePacket authenticatePacket)
 	{
 
 	}
 
-	private void handleControlPacket(final @NotNull PingPacket pingPacket)
+	private void handleControlPacket(final PingPacket pingPacket)
 	{
 
 	}
 
-	private void handleControlPacket(final @NotNull CryptSetupPacket cryptSetupPacket)
+	private void handleControlPacket(final CryptSetupPacket cryptSetupPacket)
 	{
 
 	}
 
 	@Override
-	protected void handleException(final @NotNull IOException e)
+	protected void handleException(final IOException e)
 	{
 
 	}

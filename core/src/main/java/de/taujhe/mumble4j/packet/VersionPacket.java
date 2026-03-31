@@ -2,7 +2,7 @@ package de.taujhe.mumble4j.packet;
 
 import com.google.protobuf.MessageLite;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import MumbleProto.Mumble;
 
@@ -12,6 +12,7 @@ import MumbleProto.Mumble;
  * @author Jan Henke (Jan.Henke@taujhe.de)
  * @see PacketType#VERSION
  */
+@NullMarked
 public final class VersionPacket extends MumbleControlPacket
 {
 	private final Mumble.Version version;
@@ -62,7 +63,6 @@ public final class VersionPacket extends MumbleControlPacket
 		return result;
 	}
 
-	@NotNull
 	@Override
 	protected PacketType getPacketType()
 	{
@@ -70,7 +70,7 @@ public final class VersionPacket extends MumbleControlPacket
 	}
 
 	@Override
-	protected @NotNull MessageLite getMessage()
+	protected MessageLite getMessage()
 	{
 		return version;
 	}

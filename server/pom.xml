@@ -11,6 +11,7 @@
 
     <groupId>de.taujhe.mumble4j</groupId>
     <artifactId>server</artifactId>
+    <packaging>quarkus</packaging>
 
     <properties>
         <compiler-plugin.version>3.13.0</compiler-plugin.version>
@@ -19,7 +20,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.27.1</quarkus.platform.version>
+        <quarkus.platform.version>3.33.1</quarkus.platform.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.1</surefire-plugin.version>
     </properties>
@@ -96,6 +97,10 @@
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-openapi</artifactId>
         </dependency>
 
@@ -117,8 +122,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
+            <groupId>org.jspecify</groupId>
+            <artifactId>jspecify</artifactId>
         </dependency>
 
         <dependency>
@@ -129,7 +134,7 @@
         <!-- Testing -->
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-junit5-mockito</artifactId>
+            <artifactId>quarkus-junit-mockito</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -140,7 +145,7 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.27.3</version>
+            <version>3.27.7</version>
         </dependency>
     </dependencies>
 
@@ -151,21 +156,28 @@
                 <artifactId>quarkus-maven-plugin</artifactId>
                 <version>${quarkus.platform.version}</version>
                 <extensions>true</extensions>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>build</goal>
-                            <goal>generate-code</goal>
-                            <goal>generate-code-tests</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${compiler-plugin.version}</version>
                 <configuration>
+                    <compilerArgs>
+                        <arg>-XDcompilePolicy=simple</arg>
+                        <arg>--should-stop=ifError=FLOW</arg>
+                        <arg>-Xplugin:ErrorProne -XepDisableWarningsInGeneratedCode -XepOpt:NullAway:OnlyNullMarked=true</arg>
+                        <arg>-XDaddTypeAnnotationsToSymbol=true</arg>
+                    </compilerArgs>
                     <annotationProcessorPaths>
+                        <path>
+                            <groupId>com.google.errorprone</groupId>
+                            <artifactId>error_prone_core</artifactId>
+                            <version>${error-prone.version}</version>
+                        </path>
+                        <path>
+                            <groupId>com.uber.nullaway</groupId>
+                            <artifactId>nullaway</artifactId>
+                            <version>${null-away.version}</version>
+                        </path>
                         <path>
                             <groupId>org.hibernate.orm</groupId>
                             <artifactId>hibernate-processor</artifactId>
@@ -181,6 +193,7 @@
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
                     </systemPropertyVariables>
+                    <argLine>@{argLine}</argLine>
                 </configuration>
             </plugin>
             <plugin>
@@ -201,6 +214,7 @@
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
                     </systemPropertyVariables>
+                    <argLine>@{argLine}</argLine>
                 </configuration>
             </plugin>
         </plugins>

@@ -40,8 +40,10 @@
     </modules>
 
     <properties>
-        <maven.compiler.release>17</maven.compiler.release>
+        <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <error-prone.version>2.48.0</error-prone.version>
+        <null-away.version>0.13.1</null-away.version>
     </properties>
 
     <dependencyManagement>
@@ -53,21 +55,21 @@
             </dependency>
 
             <dependency>
+                <groupId>org.jspecify</groupId>
+                <artifactId>jspecify</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>2.0.16</version>
             </dependency>
 
             <dependency>
-                <groupId>org.jetbrains</groupId>
-                <artifactId>annotations</artifactId>
-                <version>26.0.2</version>
-            </dependency>
-
-            <dependency>
                 <groupId>com.github.marianobarrios</groupId>
                 <artifactId>tls-channel</artifactId>
-                <version>0.9.1</version>
+                <version>0.10.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

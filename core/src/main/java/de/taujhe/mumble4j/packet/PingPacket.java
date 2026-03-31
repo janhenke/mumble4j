@@ -2,7 +2,7 @@ package de.taujhe.mumble4j.packet;
 
 import com.google.protobuf.MessageLite;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import MumbleProto.Mumble;
 
@@ -12,11 +12,12 @@ import MumbleProto.Mumble;
  * @author Jan Henke (Jan.Henke@taujhe.de)
  * @see PacketType#PING
  */
+@NullMarked
 public final class PingPacket extends MumbleControlPacket
 {
 	private final Mumble.Ping ping;
 
-	public PingPacket(final @NotNull Mumble.Ping ping)
+	public PingPacket(final Mumble.Ping ping)
 	{
 		this.ping = ping;
 	}
@@ -27,13 +28,13 @@ public final class PingPacket extends MumbleControlPacket
 	}
 
 	@Override
-	protected @NotNull PacketType getPacketType()
+	protected PacketType getPacketType()
 	{
 		return PacketType.PING;
 	}
 
 	@Override
-	protected @NotNull MessageLite getMessage()
+	protected MessageLite getMessage()
 	{
 		return ping;
 	}

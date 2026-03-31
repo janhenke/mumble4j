@@ -2,12 +2,12 @@ package de.taujhe.mumble4j.impl;
 
 import de.taujhe.mumble4j.packet.MumbleControlPacket;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import tlschannel.TlsChannel;
 
 /**
@@ -15,15 +15,16 @@ import tlschannel.TlsChannel;
  *
  * @author Jan Henke (Jan.Henke@taujhe.de)
  */
+@NullMarked
 public abstract class MumbleConnection implements Closeable
 {
 	/// Default port number for a mumble server.
 	public static final int DEFAULT_PORT = 64738;
 
-	private final Executor executor;
+	private final ExecutorService executor;
 	private final TlsChannel tlsChannel;
 
-	protected MumbleConnection(final Executor executor, final TlsChannel tlsChannel)
+	protected MumbleConnection(final ExecutorService executor, final TlsChannel tlsChannel)
 	{
 		this.executor = executor;
 		this.tlsChannel = tlsChannel;
@@ -31,9 +32,9 @@ public abstract class MumbleConnection implements Closeable
 		executor.execute(this::readPacket);
 	}
 
-	protected abstract void acceptPacket(final @NotNull MumbleControlPacket packet);
+	protected abstract void acceptPacket(final MumbleControlPacket packet);
 
-	protected abstract void handleException(final @NotNull IOException e);
+	protected abstract void handleException(final IOException e);
 
 	private void readPacket()
 	{
@@ -51,7 +52,7 @@ public abstract class MumbleConnection implements Closeable
 		}
 	}
 
-	private void writePacket(final @NotNull MumbleControlPacket packet)
+	private void writePacket(final MumbleControlPacket packet)
 	{
 		final ByteBuffer buffer = ByteBuffer.allocate(MumbleControlPacket.MAX_PACKET_LENGTH);
 		try
@@ -67,7 +68,7 @@ public abstract class MumbleConnection implements Closeable
 		}
 	}
 
-	public void sendPacket(final @NotNull MumbleControlPacket packet)
+	public void sendPacket(final MumbleControlPacket packet)
 	{
 		executor.execute(() -> writePacket(packet));
 	}

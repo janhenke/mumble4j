@@ -1,12 +1,11 @@
 package de.taujhe.mumble4j.packet;
 
-import java.nio.ByteBuffer;
-
 import com.google.protobuf.MessageLite;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import MumbleProto.Mumble;
+import java.nio.ByteBuffer;
 
 /**
  * Mumble Crypt Setup packet.
@@ -14,38 +13,39 @@ import MumbleProto.Mumble;
  * @author Jan Henke (Jan.Henke@taujhe.de)
  * @see PacketType#CRYPT_SETUP
  */
+@NullMarked
 public final class CryptSetupPacket extends MumbleControlPacket
 {
 	private final Mumble.CryptSetup cryptSetup;
 
-	public CryptSetupPacket(final @NotNull Mumble.CryptSetup cryptSetup)
+	public CryptSetupPacket(final Mumble.CryptSetup cryptSetup)
 	{
 		this.cryptSetup = cryptSetup;
 	}
 
-	public @NotNull ByteBuffer getKey()
+	public ByteBuffer getKey()
 	{
 		return cryptSetup.getKey().asReadOnlyByteBuffer();
 	}
 
-	public @NotNull ByteBuffer getClientNonce()
+	public ByteBuffer getClientNonce()
 	{
 		return cryptSetup.getClientNonce().asReadOnlyByteBuffer();
 	}
 
-	public @NotNull ByteBuffer getServerNonce()
+	public ByteBuffer getServerNonce()
 	{
 		return cryptSetup.getServerNonce().asReadOnlyByteBuffer();
 	}
 
 	@Override
-	protected @NotNull PacketType getPacketType()
+	protected PacketType getPacketType()
 	{
 		return PacketType.CRYPT_SETUP;
 	}
 
 	@Override
-	protected @NotNull MessageLite getMessage()
+	protected MessageLite getMessage()
 	{
 		return cryptSetup;
 	}

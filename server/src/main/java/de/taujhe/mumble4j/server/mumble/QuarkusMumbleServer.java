@@ -4,7 +4,7 @@ import de.taujhe.mumble4j.MumbleServer;
 import de.taujhe.mumble4j.server.persistence.RegisteredUserRepository;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +25,7 @@ import java.net.InetSocketAddress;
  */
 @Startup
 @Singleton
+@NullMarked
 public class QuarkusMumbleServer extends MumbleServer
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(QuarkusMumbleServer.class);
@@ -32,7 +33,7 @@ public class QuarkusMumbleServer extends MumbleServer
 	private final RegisteredUserRepository registeredUserRepository;
 
 	@Inject
-	public QuarkusMumbleServer(final @NotNull TlsConfigurationRegistry tlsConfigurationRegistry,
+	public QuarkusMumbleServer(final TlsConfigurationRegistry tlsConfigurationRegistry,
 	                           @ConfigProperty(name = "mumble.server.port") final int serverPort,
 	                           final RegisteredUserRepository registeredUserRepository) throws IOException
 	{
@@ -50,7 +51,7 @@ public class QuarkusMumbleServer extends MumbleServer
 		this.registeredUserRepository = registeredUserRepository;
 	}
 
-	public void onReload(@Observes final @NotNull CertificateUpdatedEvent event)
+	public void onReload(@Observes final CertificateUpdatedEvent event)
 	{
 		if ("mumble".equals(event.name()))
 		{
@@ -67,13 +68,13 @@ public class QuarkusMumbleServer extends MumbleServer
 	}
 
 	@Override
-	protected void handleException(final @NotNull IOException e)
+	protected void handleException(final IOException e)
 	{
 		LOGGER.error("", e);
 	}
 
 	@Override
-	protected boolean isUsernameRegistered(@NotNull final String username)
+	protected boolean isUsernameRegistered(final String username)
 	{
 		return registeredUserRepository.countByUsername(username) > 0;
 	}

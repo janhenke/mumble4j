@@ -1,5 +1,7 @@
 package de.taujhe.mumble4j.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * Identifier of a Mumble session.
  *
@@ -7,5 +9,6 @@ package de.taujhe.mumble4j.impl;
  *
  * @author Jan Henke (Jan.Henke@taujhe.de)
  */
+@NullMarked
 public record SessionId(int value)
 {}
