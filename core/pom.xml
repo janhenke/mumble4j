@@ -15,7 +15,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <protobuf.Version>3.25.8</protobuf.Version>
+        <protobuf.Version>4.34.1</protobuf.Version>
     </properties>
 
     <dependencies>
