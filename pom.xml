@@ -43,7 +43,7 @@
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <error-prone.version>2.48.0</error-prone.version>
-        <null-away.version>0.13.1</null-away.version>
+        <null-away.version>0.13.2</null-away.version>
     </properties>
 
     <dependencyManagement>
