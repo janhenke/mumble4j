@@ -42,7 +42,7 @@ public class QuarkusMumbleServer extends MumbleServer
 			{
 				return tlsConfiguration.createSSLContext();
 			}
-			catch (Exception e)
+			catch (final Exception e)
 			{
 				LOGGER.error("Failed to create SSLContext", e);
 				throw new RuntimeException(e);

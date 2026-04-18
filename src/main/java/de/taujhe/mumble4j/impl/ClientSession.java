@@ -20,7 +20,6 @@ import MumbleProto.Mumble;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.atomic.AtomicInteger;
 import tlschannel.ServerTlsChannel;
 
 /**
@@ -34,14 +33,12 @@ public class ClientSession extends MumbleConnection
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ClientSession.class);
 
-	private static final AtomicInteger sessionIdGenerator = new AtomicInteger(1);
-
 	private final SessionId sessionId;
 
-	public ClientSession(final ExecutorService executor, final ServerTlsChannel tlsChannel)
+	public ClientSession(final ExecutorService executor, final ServerTlsChannel tlsChannel, final SessionId sessionId)
 	{
 		super(executor, tlsChannel);
-		this.sessionId = new SessionId(sessionIdGenerator.incrementAndGet());
+		this.sessionId = sessionId;
 	}
 
 	public SessionId getSessionId()

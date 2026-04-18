@@ -1,14 +1,13 @@
 package de.taujhe.mumble4j.packet;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 import com.google.protobuf.MessageLite;
 
 import org.jspecify.annotations.NullMarked;
 
 import MumbleProto.Mumble;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Mumble {@code Authenticate} packet.

@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 import tlschannel.ServerTlsChannel;
 
 /**
@@ -30,26 +31,28 @@ import tlschannel.ServerTlsChannel;
 @NullMarked
 public abstract class MumbleServer implements Closeable
 {
+	private static final AtomicInteger sessionIdGenerator = new AtomicInteger(1);
+
 	private ServerSocketChannel serverSocketChannel;
 	private final ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor();
 	private final Map<SessionId, ClientSession> clientSessions = new ConcurrentHashMap<>();
 
-	protected MumbleServer(final InetSocketAddress socketAddress, final SSLContext sslContext)
-			throws IOException
+	protected MumbleServer(final InetSocketAddress socketAddress, final SSLContext sslContext) throws IOException
 	{
 		// IOException here is fatal, if this fails, this object is useless. Therefore, let the caller handle it
 		this.serverSocketChannel = ServerSocketChannel.open().bind(socketAddress);
 		executorService.submit(() -> acceptConnection(serverSocketChannel, sslContext));
 	}
 
-	private void acceptConnection(final ServerSocketChannel serverSocketChannel,
-	                              final SSLContext sslContext)
+	private void acceptConnection(final ServerSocketChannel serverSocketChannel, final SSLContext sslContext)
 	{
 		try
 		{
 			final SocketChannel socketChannel = serverSocketChannel.accept();
 			final ServerTlsChannel tlsChannel = ServerTlsChannel.newBuilder(socketChannel, sslContext).build();
-			final ClientSession clientSession = new ClientSession(executorService, tlsChannel);
+			final ClientSession clientSession = new ClientSession(executorService,
+			                                                      tlsChannel,
+			                                                      new SessionId(sessionIdGenerator.incrementAndGet()));
 			clientSessions.put(clientSession.getSessionId(), clientSession);
 
 			clientSession.sendServerHandshake();
