@@ -1,0 +1,17 @@
+services:
+  mumble4j:
+    image: ghcr.io/janhenke/mumble4j:latest
+    restart: unless-stopped
+    ports:
+      - ${HTTP_PORT:-8080}:8080/tcp
+      - ${MANAGEMENT_PORT:-9000}:9000/tcp
+      - ${MUMBLE_PORT:-64738}:64738
+    environment:
+      - QUARKUS_DATASOURCE_DB_KIND=${DB_KIND:-postgresql}
+      - QUARKUS_DATASOURCE_JDBC_URL=${DB_JDBC_URL}
+      - QUARKUS_DATASOURCE_USERNAME=${DB_USERNAME}
+      - QUARKUS_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - QUARKUS_OIDC_AUTH_SERVER_URL=${OIDC_AUTH_SERVER_URL}
+      - QUARKUS_OIDC_CLIENT_ID=${OIDC_CLIENT_ID}
+      - QUARKUS_OIDC_CREDENTIALS_SECRET=${OIDC_CLIENT_SECRET}
+      - QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_ENDPOINT}
