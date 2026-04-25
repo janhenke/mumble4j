@@ -7,11 +7,11 @@ services:
       - ${MANAGEMENT_PORT:-9000}:9000/tcp
       - ${MUMBLE_PORT:-64738}:64738
     environment:
-      - quarkus.datasource.db.kind=${DB_KIND:-postgresql}
-      - quarkus.datasource.jdbc.url=${DB_JDBC_URL}
-      - quarkus.datasource.username=${DB_USERNAME}
-      - quarkus.datasource.password=${DB_PASSWORD}
-      - quarkus.oidc.auth.server.url=${OIDC_AUTH_SERVER_URL}
-      - quarkus.oidc.client.id=${OIDC_CLIENT_ID}
-      - quarkus.oidc.credentials.secret=${OIDC_CLIENT_SECRET}
-      - quarkus.otel.exporter.otlp.endpoint=${OTEL_ENDPOINT:-http://localhost:4317}
+      - quarkus.datasource.db.kind=${QUARKUS_DATASOURCE_DB_KIND:-postgresql}
+      - quarkus.datasource.jdbc.url=${QUARKUS_DATASOURCE_JDBC_URL}
+      - quarkus.datasource.username=${QUARKUS_DATASOURCE_USERNAME}
+      - quarkus.datasource.password=${QUARKUS_DATASOURCE_PASSWORD}
+      - quarkus.oidc.auth.server.url=${QUARKUS_OIDC_AUTH_SERVER_URL}
+      - quarkus.oidc.client.id=${QUARKUS_OIDC_CLIENT_ID}
+      - quarkus.oidc.credentials.secret=${QUARKUS_OIDC_CREDENTIALS_SECRET}
+      - quarkus.otel.exporter.otlp.endpoint=${QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT:-http://localhost:4317}
