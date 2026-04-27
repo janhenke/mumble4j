@@ -45,7 +45,7 @@
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.5</surefire-plugin.version>
         <error-prone.version>2.49.0</error-prone.version>
-        <null-away.version>0.13.2</null-away.version>
+        <null-away.version>0.13.4</null-away.version>
     </properties>
 
     <dependencyManagement>
