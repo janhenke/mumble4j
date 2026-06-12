@@ -18,6 +18,9 @@ buildNumber.properties
 *.iml
 *.ipr
 
+### Local development configuration ###
+.env
+
 ### Eclipse ###
 .apt_generated
 .classpath

@@ -27,6 +27,8 @@ quarkus:
   quarkus:
     console:
       color: true
+    live-reload:
+      instrumentation: true
     log:
       category:
         "de.taujhe.mumble4j":
